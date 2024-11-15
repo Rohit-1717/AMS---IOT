@@ -1,7 +1,8 @@
-// src/components/Layout.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeProvider';
+import { MdLightMode, MdDarkMode } from 'react-icons/md';
+
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
@@ -39,9 +40,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-4">
-            <Link to="/features" className="hover:text-gray-200">Features</Link>
-            <Link to="/pricing" className="hover:text-gray-200">Pricing</Link>
-            <Link to="/contact" className="hover:text-gray-200">Contact</Link>
+            <Link to="/login" className="hover:text-gray-200">Login</Link>
+            <Link to="/register" className="hover:text-gray-200">Register</Link>
           </nav>
 
           {/* Dark Mode Toggle */}
@@ -49,7 +49,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             onClick={toggleTheme}
             className="hidden lg:inline-block ml-4 bg-white text-blue-600 font-semibold px-3 py-1 rounded hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
           >
-            {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
           </button>
         </div>
 
@@ -58,9 +58,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           className={`lg:hidden overflow-hidden transition-max-height duration-500 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}
         >
           <nav className="flex flex-col items-center mt-4 space-y-4 text-lg bg-blue-600 dark:bg-blue-800 text-white py-4">
-            <Link to="/features" className="hover:text-gray-200" onClick={toggleMenu}>Features</Link>
-            <Link to="/pricing" className="hover:text-gray-200" onClick={toggleMenu}>Pricing</Link>
-            <Link to="/contact" className="hover:text-gray-200" onClick={toggleMenu}>Contact</Link>
+            <Link to="/login" className="hover:text-gray-200" onClick={toggleMenu}>Login</Link>
+            <Link to="/register" className="hover:text-gray-200" onClick={toggleMenu}>Register</Link>
 
             {/* Dark Mode Toggle for Mobile */}
             <button
@@ -70,7 +69,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               }}
               className="mt-4 bg-white text-blue-600 font-semibold px-3 py-1 rounded hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
-              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
             </button>
           </nav>
         </div>
