@@ -16,8 +16,8 @@ const Registration: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Card className="w-full max-w-md p-4">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md p-6 shadow-lg rounded-lg">
           <CardHeader>
             <div className="flex justify-center space-x-4 mb-4">
               <Button
@@ -43,7 +43,7 @@ const Registration: React.FC = () => {
             <CardDescription>
               {view === "faculty"
                 ? "Create an account as a faculty member to manage attendance."
-                : "Create an account as a student to mark your attendance."}
+                : ""}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -76,6 +76,22 @@ const Registration: React.FC = () => {
                   required
                 />
               </div>
+              {view === "student" && (
+                <div>
+                  <label
+                    htmlFor="enrollment-number"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Enrollment Number
+                  </label>
+                  <Input
+                    id="enrollment-number"
+                    type="text"
+                    placeholder="Enter your enrollment number"
+                    required
+                  />
+                </div>
+              )}
               <div>
                 <label
                   htmlFor="password"

@@ -15,21 +15,21 @@ const Login: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <Card className="w-full max-w-md p-6 shadow-lg rounded-lg">
           {/* Role Toggle Buttons */}
           <div className="flex justify-center space-x-4 mb-6">
             <Button
               variant={role === "faculty" ? "default" : "outline"}
               onClick={() => setRole("faculty")}
-              className="w-full"
+              className="w-1/2"
             >
               Faculty
             </Button>
             <Button
               variant={role === "student" ? "default" : "outline"}
               onClick={() => setRole("student")}
-              className="w-full"
+              className="w-1/2"
             >
               Student
             </Button>
@@ -45,15 +45,19 @@ const Login: React.FC = () => {
             <form className="space-y-4">
               <div className="flex flex-col space-y-2">
                 <label
-                  htmlFor="email"
+                  htmlFor="identifier"
                   className="text-sm font-semibold text-gray-600 dark:text-gray-400"
                 >
-                  Email Address
+                  {role === "faculty" ? "Faculty ID" : "Enrollment Number"}
                 </label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
+                  id="identifier"
+                  type="text"
+                  placeholder={
+                    role === "faculty"
+                      ? "Enter your Faculty ID"
+                      : "Enter your Enrollment Number"
+                  }
                   className="dark:bg-gray-800 dark:border-gray-700"
                 />
               </div>
