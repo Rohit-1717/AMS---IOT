@@ -16,7 +16,4 @@ connectDB();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Routes
-// app.use('/api/attendance', attendanceRoutes);
-
 export default app;
