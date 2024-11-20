@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 // import Header from './components/Header';
 import Footer from "./components/Footer";
 import Registration from "./pages/Registration";
+import Admin_auth from "./pages/Admin_auth";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -21,6 +22,7 @@ const App: React.FC = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
+            <Route path="/admin-auth" element={<Admin_auth/>} />
           </Routes>
         </main>
         <Footer />

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeProvider';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 
-
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,6 +39,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-4">
+            <Link to="/admin" className="hover:text-gray-200">Admin</Link>
             <Link to="/login" className="hover:text-gray-200">Login</Link>
             <Link to="/register" className="hover:text-gray-200">Register</Link>
           </nav>
@@ -58,6 +58,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           className={`lg:hidden overflow-hidden transition-max-height duration-500 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}
         >
           <nav className="flex flex-col items-center mt-4 space-y-4 text-lg bg-blue-600 dark:bg-blue-800 text-white py-4">
+            <Link to="/admin-auth" className="hover:text-gray-200" onClick={toggleMenu}>Admin</Link>
             <Link to="/login" className="hover:text-gray-200" onClick={toggleMenu}>Login</Link>
             <Link to="/register" className="hover:text-gray-200" onClick={toggleMenu}>Register</Link>
 

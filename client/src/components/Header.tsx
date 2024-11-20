@@ -20,6 +20,11 @@ const Header: React.FC = () => {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center space-x-4">
           {/* Conditionally render links based on current path */}
+          {location.pathname !== "/admin" && (
+            <Link to="/admin-auth" className="hover:text-gray-200">
+              Admin
+            </Link>
+          )}
           {location.pathname !== "/login" && (
             <Link to="/login" className="hover:text-gray-200">
               Login
@@ -80,13 +85,30 @@ const Header: React.FC = () => {
       >
         <nav className="flex flex-col items-center mt-4 space-y-4 text-lg bg-blue-600 dark:bg-blue-800 text-white py-4">
           {/* Conditionally render links based on current path */}
+          {location.pathname !== "/admin" && (
+            <Link
+              to="/admin-auth"
+              className="hover:text-gray-200"
+              onClick={toggleMenu}
+            >
+              Admin
+            </Link>
+          )}
           {location.pathname !== "/login" && (
-            <Link to="/login" className="hover:text-gray-200" onClick={toggleMenu}>
+            <Link
+              to="/login"
+              className="hover:text-gray-200"
+              onClick={toggleMenu}
+            >
               Login
             </Link>
           )}
           {location.pathname !== "/register" && (
-            <Link to="/register" className="hover:text-gray-200" onClick={toggleMenu}>
+            <Link
+              to="/register"
+              className="hover:text-gray-200"
+              onClick={toggleMenu}
+            >
               Register
             </Link>
           )}
