@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-// Define user types (you can adjust these based on your exact user schemas)
+// Define user types
 interface IAdmin {
   role: "admin";
   id: string;
@@ -20,7 +20,7 @@ interface IStudent {
   email: string;
 }
 
-// Union type for user roles (Admin, Faculty, or Student)
+// Union type for user roles
 type IUser = IAdmin | IFaculty | IStudent;
 
 // Middleware to authenticate and attach the user to the request object
@@ -33,7 +33,7 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
   }
 
   try {
-    // Verify and decode the token using the JWT_SECRET
+    // Verify and decode the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       user: IUser;
     };
@@ -52,10 +52,11 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
 const checkRole = (role: "admin" | "faculty" | "student") => {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (req.user?.role !== role) {
-      return res.status(403).json({ message: "Forbidden: Insufficient role" });
+      res.status(403).json({ message: "Forbidden: Insufficient role" });
+      return; // Ensure the function ends execution here
     }
-    next();
+    next(); // Proceed to the next middleware or route handler
   };
 };
 
-export { auth, checkRole };
+export { auth, checkRole, IUser };
