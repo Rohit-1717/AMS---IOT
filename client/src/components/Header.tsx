@@ -10,6 +10,9 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
+  // Check if we are on the admin-auth route
+  const isAdminAuthPage = location.pathname === "/admin-auth";
+
   return (
     <header className="bg-blue-600 dark:bg-blue-800 text-white p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -19,18 +22,18 @@ const Header: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center space-x-4">
-          {/* Conditionally render links based on current path */}
-          {location.pathname !== "/admin" && (
+          {/* Hide links when on the admin-auth page */}
+          {!isAdminAuthPage && location.pathname !== "/admin" && (
             <Link to="/admin-auth" className="hover:text-gray-200">
               Admin
             </Link>
           )}
-          {location.pathname !== "/login" && (
+          {!isAdminAuthPage && location.pathname !== "/login" && (
             <Link to="/login" className="hover:text-gray-200">
               Login
             </Link>
           )}
-          {location.pathname !== "/register" && (
+          {!isAdminAuthPage && location.pathname !== "/register" && (
             <Link to="/register" className="hover:text-gray-200">
               Register
             </Link>
@@ -84,8 +87,8 @@ const Header: React.FC = () => {
         }`}
       >
         <nav className="flex flex-col items-center mt-4 space-y-4 text-lg bg-blue-600 dark:bg-blue-800 text-white py-4">
-          {/* Conditionally render links based on current path */}
-          {location.pathname !== "/admin" && (
+          {/* Hide links when on the admin-auth page */}
+          {!isAdminAuthPage && location.pathname !== "/admin" && (
             <Link
               to="/admin-auth"
               className="hover:text-gray-200"
@@ -94,7 +97,7 @@ const Header: React.FC = () => {
               Admin
             </Link>
           )}
-          {location.pathname !== "/login" && (
+          {!isAdminAuthPage && location.pathname !== "/login" && (
             <Link
               to="/login"
               className="hover:text-gray-200"
@@ -103,7 +106,7 @@ const Header: React.FC = () => {
               Login
             </Link>
           )}
-          {location.pathname !== "/register" && (
+          {!isAdminAuthPage && location.pathname !== "/register" && (
             <Link
               to="/register"
               className="hover:text-gray-200"
