@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Attendance Management System IOT Based.",
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",
