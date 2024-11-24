@@ -13,7 +13,11 @@ const App: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+      className={`min-h-screen ${
+        theme === "dark"
+          ? "bg-gray-900 text-gray-100"
+          : "bg-white text-gray-900"
+      }`}
     >
       <Router>
         {/* <Header /> */}
@@ -22,7 +26,7 @@ const App: React.FC = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
-            <Route path="/admin-auth" element={<Admin_auth/>} />
+            <Route path="/admin-auth" element={<Admin_auth />} />
           </Routes>
         </main>
         <Footer />
