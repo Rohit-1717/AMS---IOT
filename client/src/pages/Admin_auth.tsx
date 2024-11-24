@@ -16,6 +16,12 @@ const AdminAuth: React.FC = () => {
   const [formType, setFormType] = useState<"login" | "register">("login");
   const { theme } = useTheme(); // Access current theme
 
+  const handleRoleChange = (value: string | null) => {
+    if (value === "HOD" || value === "Director") {
+      setRole(value);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -33,7 +39,7 @@ const AdminAuth: React.FC = () => {
             <ToggleGroup
               type="single"
               value={role}
-              onValueChange={(value) => value && setRole(value)}
+              onValueChange={handleRoleChange}
               className="flex space-x-2"
             >
               <ToggleGroupItem
