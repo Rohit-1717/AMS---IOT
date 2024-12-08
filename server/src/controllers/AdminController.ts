@@ -4,7 +4,6 @@ import { ApiError } from "../utils/ApiError";
 import { ApiResponse } from "../utils/ApiResponse";
 import { asyncHandler } from "../utils/AsyncHandler";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 // Types for request bodies
 interface RegisterRequestBody {

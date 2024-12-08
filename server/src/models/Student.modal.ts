@@ -7,12 +7,19 @@ export interface IStudent extends Document {
   email: string;
   password: string;
   role: string;
+  fullName: string; // Add fullName to the interface
   comparePassword: (enteredPassword: string) => Promise<boolean>;
 }
 
 // Define Student Schema
 const studentSchema: Schema = new Schema(
   {
+    fullName: {
+      // Add fullName field
+      type: String,
+      required: true, // Make it required
+      trim: true,
+    },
     enrollmentNumber: {
       type: String,
       required: true,
@@ -42,7 +49,7 @@ const studentSchema: Schema = new Schema(
 // Password hashing middleware
 studentSchema.pre<IStudent>("save", async function (next) {
   if (!this.isModified("password")) return next();
-  
+
   // Hash the password using bcryptjs
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
@@ -50,7 +57,9 @@ studentSchema.pre<IStudent>("save", async function (next) {
 });
 
 // Method to compare passwords
-studentSchema.methods.comparePassword = async function (enteredPassword: string) {
+studentSchema.methods.comparePassword = async function (
+  enteredPassword: string
+) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
