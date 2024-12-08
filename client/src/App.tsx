@@ -7,6 +7,10 @@ import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Registration from "./pages/Registration";
 import Admin_auth from "./pages/Admin_auth";
+import DirectorDashboard from "./pages/DirectorDashboard";
+import HodDashboard from "./pages/HodDashboard";
+import { FacultyAuthProvider } from "./context/Faculty_AuthProvider";
+import { StudentAuthProvider } from "./context/Student_AuthProvider";
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -22,12 +26,24 @@ const App: React.FC = () => {
       <Router>
         {/* <Header /> */}
         <main>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Registration />} />
-            <Route path="/admin-auth" element={<Admin_auth />} />
-          </Routes>
+          <FacultyAuthProvider>
+            <StudentAuthProvider>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Registration />} />
+                <Route path="/admin-auth" element={<Admin_auth />} />
+                <Route
+                  path="/admin-auth/HodDashboard"
+                  element={<HodDashboard />}
+                />
+                <Route
+                  path="/admin-auth/DirectorDashboard"
+                  element={<DirectorDashboard />}
+                />
+              </Routes>
+            </StudentAuthProvider>
+          </FacultyAuthProvider>
         </main>
         <Footer />
       </Router>

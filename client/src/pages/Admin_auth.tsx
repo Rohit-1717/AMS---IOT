@@ -9,16 +9,70 @@ import {
 } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTheme } from "@/context/ThemeProvider"; // Ensure this is the correct path to your ThemeProvider
+import { useAuth } from "@/context/AuthProvider"; // Import AuthProvider
+import { toast } from "react-hot-toast";
 import Header from "@/components/Header";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const AdminAuth: React.FC = () => {
   const [role, setRole] = useState<"HOD" | "Director">("HOD");
   const [formType, setFormType] = useState<"login" | "register">("login");
   const { theme } = useTheme(); // Access current theme
+  const { login, register } = useAuth(); // Get auth methods
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  // Handle form data changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Handle role change
   const handleRoleChange = (value: string | null) => {
     if (value === "HOD" || value === "Director") {
       setRole(value);
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { email, password, confirmPassword } = formData;
+
+    if (!email || !password || (formType === "register" && !confirmPassword)) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    if (formType === "register" && password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
+    try {
+      if (formType === "login") {
+        await login(email, password, role); // Pass role for additional context
+        toast.success("Login successful!");
+        // Navigate to role-based dashboard
+        const dashboardPath =
+          role === "HOD"
+            ? "/admin-auth/HodDashboard"
+            : "/admin-auth/DirectorDashboard";
+        navigate(dashboardPath);
+      } else {
+        await register(email, password, role); // Register the user
+        toast.success("Registration successful! Please login.");
+        setFormType("login"); // Switch to login after successful registration
+      }
+    } catch (error: any) {
+      console.error("Error:", error.message);
+      toast.error(error.response?.data?.message || "Something went wrong.");
     }
   };
 
@@ -74,7 +128,7 @@ const AdminAuth: React.FC = () => {
 
           {/* Form Fields */}
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="flex flex-col space-y-2">
                 <label
                   htmlFor="email"
@@ -86,6 +140,8 @@ const AdminAuth: React.FC = () => {
                   id="email"
                   type="email"
                   placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="dark:bg-gray-800 dark:border-gray-700"
                   required
                 />
@@ -101,6 +157,8 @@ const AdminAuth: React.FC = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
                   className="dark:bg-gray-800 dark:border-gray-700"
                   required
                 />
@@ -108,28 +166,30 @@ const AdminAuth: React.FC = () => {
               {formType === "register" && (
                 <div className="flex flex-col space-y-2">
                   <label
-                    htmlFor="confirm-password"
+                    htmlFor="confirmPassword"
                     className="text-sm font-semibold text-gray-600 dark:text-gray-400"
                   >
                     Confirm Password
                   </label>
                   <Input
-                    id="confirm-password"
+                    id="confirmPassword"
                     type="password"
                     placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
                     className="dark:bg-gray-800 dark:border-gray-700"
                     required
                   />
                 </div>
               )}
+              <Button type="submit" className="w-full mt-4">
+                {formType === "login" ? "Login" : "Register"}
+              </Button>
             </form>
           </CardContent>
 
           {/* Form Footer */}
           <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full">
-              {formType === "login" ? "Login" : "Register"}
-            </Button>
             <Button
               variant="ghost"
               className="w-full text-sm"
